@@ -13,5 +13,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+    name: "Home",
+    data() {
+        return {
+        }
+    },
+    created() {
+    },
+    methods: {}
+}
 </script>
