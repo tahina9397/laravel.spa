@@ -31,6 +31,9 @@ import App from './App.vue';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// Components
+Vue.component("LoadingButton", () => import('./components/Auth/LoadingButton.vue'))
+
 const app = new Vue({
     router,
     el: '#app',

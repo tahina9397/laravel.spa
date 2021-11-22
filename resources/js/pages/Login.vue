@@ -13,7 +13,7 @@
                 <div class="card card-default">
                     <div class="card-header">Login</div>
                     <div class="card-body">
-                        <form>
+                        <form @submit.prevent="signIn()">
                             <div class="form-group row">
                                 <label
                                     for="email"
@@ -59,13 +59,26 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button
+                                    <loading-button
+                                        :is-loading="isLoading"
+                                        :disabled="isDisabled"
+                                        :class="[
+                                            {
+                                                'opacity-50 cursor-not-allowed':
+                                                    isDisabled,
+                                            },
+                                        ]"
+                                        class="btn btn-primary btn-block"
+                                    >
+                                        Se connecter
+                                    </loading-button>
+                                    <!-- <button
                                         type="submit"
                                         class="btn btn-primary"
                                         @click="handleSubmit"
                                     >
                                         Login
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div>
                         </form>
@@ -77,7 +90,7 @@
 </template>
 
 <script>
-import { HTTP } from "./../http-constants";
+// import { HTTP } from "./../http-constants";
 
 export default {
     data() {
@@ -85,30 +98,50 @@ export default {
             email: "",
             password: "",
             error: null,
+            submitted: false,
+            isLoading: false,
         };
     },
+    // methods: {
+    //     handleSubmit(e) {
+    //         e.preventDefault();
+    //         if (this.password.length > 0) {
+    //             HTTP.get("/sanctum/csrf-cookie").then((response) => {
+    //                 HTTP.post("api/login", {
+    //                     email: this.email,
+    //                     password: this.password,
+    //                 })
+    //                     .then((response) => {
+    //                         console.log(response.data);
+    //                         if (response.data.success) {
+    //                             this.$router.go("/dashboard");
+    //                         } else {
+    //                             this.error = response.data.message;
+    //                         }
+    //                     })
+    //                     .catch(function (error) {
+    //                         console.error(error);
+    //                     });
+    //             });
+    //         }
+    //     },
+    // },
+    computed: {
+        isDisabled() {
+            return !this.email || !this.password;
+        },
+    },
     methods: {
-        handleSubmit(e) {
-            e.preventDefault();
-            if (this.password.length > 0) {
-                HTTP.get("/sanctum/csrf-cookie").then((response) => {
-                    HTTP.post("api/login", {
-                            email: this.email,
-                            password: this.password,
-                        })
-                        .then((response) => {
-                            console.log(response.data);
-                            if (response.data.success) {
-                                this.$router.go("/dashboard");
-                            } else {
-                                this.error = response.data.message;
-                            }
-                        })
-                        .catch(function (error) {
-                            console.error(error);
-                        });
-                });
-            }
+        signIn: function () {
+            this.submitted = true;
+            this.isLoading = true;
+
+            // stop here if form is invalid
+            //   this.$v.$touch();
+            //   if (this.$v.$invalid) {
+            //     this.isLoading = false;
+            //     return;
+            //   }
         },
     },
     beforeRouteEnter(to, from, next) {
