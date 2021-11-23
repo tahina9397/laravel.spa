@@ -117,17 +117,20 @@
                                         :class="{
                                             'is-invalid':
                                                 submitted &&
-                                                !$v.user.password_confirm.sameAsPassword,
+                                                !$v.user.password_confirm
+                                                    .sameAsPassword,
                                         }"
                                     />
                                     <div
                                         v-if="
                                             submitted &&
-                                            !$v.user.password_confirm.sameAsPassword
+                                            !$v.user.password_confirm
+                                                .sameAsPassword
                                         "
                                         class="invalid-feedback"
                                     >
-                                        Password and Confirm Password should match
+                                        Password and Confirm Password should
+                                        match
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +194,12 @@ export default {
     },
     computed: {
         isDisabled() {
-            return !this.user.name || !this.user.email || !this.user.password || !this.user.password_confirm;
+            return (
+                !this.user.name ||
+                !this.user.email ||
+                !this.user.password ||
+                !this.user.password_confirm
+            );
         },
     },
     methods: {
@@ -208,21 +216,27 @@ export default {
 
             HTTP.get("/sanctum/csrf-cookie").then((response) => {
                 HTTP.post("api/register", {
-                    name: this.name,
-                    email: this.email,
-                    password: this.password,
+                    name: this.user.name,
+                    email: this.user.email,
+                    password: this.user.password,
                 })
                     .then((response) => {
                         if (response.data.success) {
                             window.location.href = "/login";
                         } else {
                             this.error = response.data.message;
+                            this.user.name = "";
+                            this.user.email = "";
+                            this.user.password = "";
+                            this.user.password_confirm = "";
                         }
                     })
                     .catch(function (error) {
                         console.error(error);
                     });
             });
+
+            this.isLoading = false;
         },
     },
     beforeRouteEnter(to, from, next) {

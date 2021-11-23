@@ -153,9 +153,9 @@ export default {
                     .catch(function (error) {
                         console.error(error);
                     });
-
-                this.isLoading = false;
             });
+
+            this.isLoading = false;
         },
     },
     beforeRouteEnter(to, from, next) {

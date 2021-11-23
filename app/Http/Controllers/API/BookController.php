@@ -9,8 +9,15 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     // all books
-    public function index()
+    public function index(Request $request)
     {
+        // $t = $request->user();
+
+        // echo "<pre>" ;
+        //          print_r($t);
+        //          echo "</pre>" ;
+        //          die() ;
+
         $books = Book::all()->toArray();
         return array_reverse($books);
     }

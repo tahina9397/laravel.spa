@@ -17101,8 +17101,8 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           console.error(error);
         });
-        _this.isLoading = false;
       });
+      this.isLoading = false;
     }
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
@@ -17130,6 +17130,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vuelidate_dist_validators_min_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../../node_modules/vuelidate/dist/validators.min.js */ "./node_modules/vuelidate/dist/validators.min.js");
 /* harmony import */ var _node_modules_vuelidate_dist_validators_min_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vuelidate_dist_validators_min_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _http_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../http-constants */ "./resources/js/http-constants.js");
+//
+//
+//
 //
 //
 //
@@ -17345,19 +17348,24 @@ __webpack_require__.r(__webpack_exports__);
 
       _http_constants__WEBPACK_IMPORTED_MODULE_0__.HTTP.get("/sanctum/csrf-cookie").then(function (response) {
         _http_constants__WEBPACK_IMPORTED_MODULE_0__.HTTP.post("api/register", {
-          name: _this.name,
-          email: _this.email,
-          password: _this.password
+          name: _this.user.name,
+          email: _this.user.email,
+          password: _this.user.password
         }).then(function (response) {
           if (response.data.success) {
             window.location.href = "/login";
           } else {
             _this.error = response.data.message;
+            _this.user.name = "";
+            _this.user.email = "";
+            _this.user.password = "";
+            _this.user.password_confirm = "";
           }
         })["catch"](function (error) {
           console.error(error);
         });
       });
+      this.isLoading = false;
     }
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
@@ -55023,7 +55031,7 @@ var render = function () {
                     !_vm.$v.user.password_confirm.sameAsPassword
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                                    Password and Confirm Password should match\n                                "
+                            "\n                                    Password and Confirm Password should\n                                    match\n                                "
                           ),
                         ])
                       : _vm._e(),
