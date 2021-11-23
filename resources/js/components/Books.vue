@@ -45,7 +45,7 @@
         <button
             type="button"
             class="btn btn-info"
-            @click="this.$router.push('/books/add')"
+            @click="$router.push('/books/add')"
         >
             Add Book
         </button>

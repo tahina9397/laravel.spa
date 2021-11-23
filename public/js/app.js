@@ -54367,7 +54367,7 @@ var render = function () {
         attrs: { type: "button" },
         on: {
           click: function ($event) {
-            return this.$router.push("/books/add")
+            return _vm.$router.push("/books/add")
           },
         },
       },
