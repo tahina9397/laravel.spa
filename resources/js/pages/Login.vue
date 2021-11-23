@@ -29,8 +29,6 @@
                                         type="text"
                                         class="form-control"
                                         v-model="user.email"
-                                        required
-                                        autofocus
                                         autocomplete="off"
                                         :class="{
                                             'is-invalid':
@@ -39,17 +37,7 @@
                                         }"
                                     />
                                     <div
-                                        v-if="
-                                            submitted && !$v.user.email.required
-                                        "
-                                        class="invalid-feedback"
-                                    >
-                                        Le champ e-mail est requis
-                                    </div>
-                                    <div
-                                        v-if="
-                                            submitted && !$v.user.email.email
-                                        "
+                                        v-if="submitted && !$v.user.email.email"
                                         class="invalid-feedback"
                                     >
                                         Adresse invalide
@@ -72,7 +60,6 @@
                                         type="password"
                                         class="form-control"
                                         v-model="user.password"
-                                        required
                                         autocomplete="off"
                                     />
                                 </div>
@@ -93,7 +80,6 @@
                                     >
                                         Se connecter
                                     </loading-button>
-                                    
                                 </div>
                             </div>
                         </form>
@@ -160,11 +146,15 @@ export default {
                             this.$router.go("/dashboard");
                         } else {
                             this.error = response.data.message;
+                            this.user.email = "";
+                            this.user.password = "";
                         }
                     })
                     .catch(function (error) {
                         console.error(error);
                     });
+
+                this.isLoading = false;
             });
         },
     },
