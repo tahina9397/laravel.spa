@@ -31,10 +31,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faClock, faLightbulb, faCheckCircle } from '@fortawesome/free-regular-svg-icons'
+import Vuelidate from "vuelidate"
 
 library.add(faTimes, faSpinner, faCheck, faUser, faKey, faTrash, faPlus, faLock, faHeart, faMobileAlt, faExclamationTriangle)
 library.add(faGithub)
 library.add(faClock, faLightbulb, faCheckCircle)
+
+/* validation*/
 
 /**
  * The following block of code may be used to automatically register your
@@ -54,6 +57,8 @@ library.add(faClock, faLightbulb, faCheckCircle)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Vue.use(Vuelidate)
 
 // Components
 Vue.component("LoadingButton", () => import('./components/Auth/LoadingButton.vue'))

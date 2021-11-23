@@ -26,13 +26,34 @@
                                 <div class="col-md-6">
                                     <input
                                         id="email"
-                                        type="email"
+                                        type="text"
                                         class="form-control"
-                                        v-model="email"
+                                        v-model="user.email"
                                         required
                                         autofocus
                                         autocomplete="off"
+                                        :class="{
+                                            'is-invalid':
+                                                submitted &&
+                                                $v.user.email.$error,
+                                        }"
                                     />
+                                    <div
+                                        v-if="
+                                            submitted && !$v.user.email.required
+                                        "
+                                        class="invalid-feedback"
+                                    >
+                                        Le champ e-mail est requis
+                                    </div>
+                                    <div
+                                        v-if="
+                                            submitted && !$v.user.email.email
+                                        "
+                                        class="invalid-feedback"
+                                    >
+                                        Adresse invalide
+                                    </div>
                                 </div>
                             </div>
 
@@ -50,7 +71,7 @@
                                         id="password"
                                         type="password"
                                         class="form-control"
-                                        v-model="password"
+                                        v-model="user.password"
                                         required
                                         autocomplete="off"
                                     />
@@ -72,13 +93,7 @@
                                     >
                                         Se connecter
                                     </loading-button>
-                                    <!-- <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                        @click="handleSubmit"
-                                    >
-                                        Login
-                                    </button> -->
+                                    
                                 </div>
                             </div>
                         </form>
@@ -90,45 +105,36 @@
 </template>
 
 <script>
-// import { HTTP } from "./../http-constants";
+import {
+    required,
+    email,
+} from "./../../../node_modules/vuelidate/dist/validators.min.js";
+
+import { HTTP } from "./../http-constants";
 
 export default {
     data() {
         return {
-            email: "",
-            password: "",
+            user: {
+                email: "",
+                password: "",
+            },
             error: null,
             submitted: false,
             isLoading: false,
         };
     },
-    // methods: {
-    //     handleSubmit(e) {
-    //         e.preventDefault();
-    //         if (this.password.length > 0) {
-    //             HTTP.get("/sanctum/csrf-cookie").then((response) => {
-    //                 HTTP.post("api/login", {
-    //                     email: this.email,
-    //                     password: this.password,
-    //                 })
-    //                     .then((response) => {
-    //                         console.log(response.data);
-    //                         if (response.data.success) {
-    //                             this.$router.go("/dashboard");
-    //                         } else {
-    //                             this.error = response.data.message;
-    //                         }
-    //                     })
-    //                     .catch(function (error) {
-    //                         console.error(error);
-    //                     });
-    //             });
-    //         }
-    //     },
-    // },
+    validations: {
+        user: {
+            email: { required, email },
+            password: { required },
+            // password: { required, minLength: minLength(6) },
+            // confirmPassword: { required, sameAsPassword: sameAs("password") },
+        },
+    },
     computed: {
         isDisabled() {
-            return !this.email || !this.password;
+            return !this.user.email || !this.user.password;
         },
     },
     methods: {
@@ -137,11 +143,29 @@ export default {
             this.isLoading = true;
 
             // stop here if form is invalid
-            //   this.$v.$touch();
-            //   if (this.$v.$invalid) {
-            //     this.isLoading = false;
-            //     return;
-            //   }
+            this.$v.$touch();
+            if (this.$v.$invalid) {
+                this.isLoading = false;
+                return;
+            }
+
+            HTTP.get("/sanctum/csrf-cookie").then((response) => {
+                HTTP.post("api/login", {
+                    email: this.user.email,
+                    password: this.user.password,
+                })
+                    .then((response) => {
+                        console.log(response.data);
+                        if (response.data.success) {
+                            this.$router.go("/dashboard");
+                        } else {
+                            this.error = response.data.message;
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            });
         },
     },
     beforeRouteEnter(to, from, next) {
@@ -152,3 +176,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.is-invalid {
+    border: 1px solid red;
+}
+</style>
