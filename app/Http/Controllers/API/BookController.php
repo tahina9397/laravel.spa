@@ -5,30 +5,25 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
     // all books
-    public function index(Request $request)
+    public function index()
     {
-        // $t = $request->user();
-
-        // echo "<pre>" ;
-        //          print_r($t);
-        //          echo "</pre>" ;
-        //          die() ;
-
-        $books = Book::all()->toArray();
+        $id_user = Auth::user()->id;
+        // $books = Book::all()->toArray();
+        $books = Book::where("user_id", $id_user)->get()->toArray();
         return array_reverse($books);
     }
 
     // add book
-    public function add(Request $request)
+    public function add(Request $request,Book $book)
     {
-        $book = new Book([
-            'name' => $request->name,
-            'author' => $request->author
-        ]);
+        $book->name = $request->name;
+        $book->author = $request->author;
+        $book->user()->associate($request->user());
         $book->save();
 
         return response()->json('The book successfully added');
