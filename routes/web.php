@@ -19,9 +19,7 @@ use Inertia\Inertia;
 
 // Route::get('/', [IndexController::class, 'index'])->name('index.index');
 
-// Route::get('/{any}', function () {
-//     // return Inertia::render('About');
-//     return view('app');
-// })->where('any', '.*');
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
 
-Route::get('/books', [BookController::class, 'index']);

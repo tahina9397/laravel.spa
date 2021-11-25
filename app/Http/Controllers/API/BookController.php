@@ -13,14 +13,14 @@ class BookController extends Controller
     // all books
     public function index()
     {
-        // $id_user = Auth::user()->id;
-        // $books = Book::where("user_id", $id_user)->get()->toArray();
-        // return array_reverse($books);
+        $id_user = Auth::user()->id;
+        $books = Book::where("user_id", $id_user)->get()->toArray();
+        return array_reverse($books);
 
-        $books = Book::all()->toArray();
-        return Inertia::render('Books', [
-            'books' => $books
-        ]);
+        // $books = Book::all()->toArray();
+        // return Inertia::render('Books', [
+        //     'books' => $books
+        // ]);
     }
 
     // add book

@@ -25,9 +25,8 @@
         </script>
     @endif
 
-    {{-- <div id="app">
-    </div> --}}
-    @inertia
+    <div id="app">
+    </div>
     
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
 </body>
