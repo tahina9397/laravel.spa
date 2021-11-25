@@ -22,14 +22,6 @@
                     <td>{{ book.updated_at }}</td>
                     <td>
                         <div class="btn-group" role="group">
-                            <router-link
-                                :to="{
-                                    name: 'editbook',
-                                    params: { id: book.id },
-                                }"
-                                class="btn btn-primary"
-                                >Edit
-                            </router-link>
                             <button
                                 class="btn btn-danger"
                                 @click="deleteBook(book.id)"
@@ -41,56 +33,18 @@
                 </tr>
             </tbody>
         </table>
-
-        <button
-            type="button"
-            class="btn btn-info"
-            @click="$router.push('/books/add')"
-        >
-            Add Book
-        </button>
     </div>
 </template>
 
 <script>
-import { HTTP } from "./../http-constants";
 
 export default {
     data() {
         return {
-            books: [],
         };
     },
-    created() {
-        HTTP.get("/sanctum/csrf-cookie").then((response) => {
-            HTTP.get("/api/books")
-                .then((response) => {
-                    this.books = response.data;
-                })
-                .catch(function (error) {
-                    console.error(error);
-                });
-        });
-    },
-    methods: {
-        deleteBook(id) {
-            HTTP.get("/sanctum/csrf-cookie").then((response) => {
-                HTTP.delete(`/api/books/delete/${id}`)
-                    .then((response) => {
-                        let i = this.books.map((item) => item.id).indexOf(id); // find index of your object
-                        this.books.splice(i, 1);
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
-            });
-        },
-    },
-    beforeRouteEnter(to, from, next) {
-        if (!window.Laravel.isLoggedin) {
-            window.location.href = "/";
-        }
-        next();
-    },
+    props:{
+        books : Array
+    }
 };
 </script>

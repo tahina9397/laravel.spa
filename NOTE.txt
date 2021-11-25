@@ -4,3 +4,4 @@ https://shouts.dev/laravel-spa-with-vue3-auth-crud-example
 
 INERTIA
 https://www.positronx.io/laravel-vue-inertia-pagination-integration-tutorial/
+https://github.com/MtDalPizzol/laravel-inertia-vue-cli

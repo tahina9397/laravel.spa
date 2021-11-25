@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\BookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use Inertia\Inertia;
@@ -18,7 +19,9 @@ use Inertia\Inertia;
 
 // Route::get('/', [IndexController::class, 'index'])->name('index.index');
 
-Route::get('/{any}', function () {
-    // return Inertia::render('About');
-    return view('app');
-})->where('any', '.*');
+// Route::get('/{any}', function () {
+//     // return Inertia::render('About');
+//     return view('app');
+// })->where('any', '.*');
+
+Route::get('/books', [BookController::class, 'index']);

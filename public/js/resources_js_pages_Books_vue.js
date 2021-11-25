@@ -11,7 +11,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _http_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../http-constants */ "./resources/js/http-constants.js");
 //
 //
 //
@@ -50,85 +49,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {
-      books: []
-    };
+    return {};
   },
-  created: function created() {
-    var _this = this;
-
-    _http_constants__WEBPACK_IMPORTED_MODULE_0__.HTTP.get("/sanctum/csrf-cookie").then(function (response) {
-      _http_constants__WEBPACK_IMPORTED_MODULE_0__.HTTP.get("/api/books").then(function (response) {
-        _this.books = response.data;
-      })["catch"](function (error) {
-        console.error(error);
-      });
-    });
-  },
-  methods: {
-    deleteBook: function deleteBook(id) {
-      var _this2 = this;
-
-      _http_constants__WEBPACK_IMPORTED_MODULE_0__.HTTP.get("/sanctum/csrf-cookie").then(function (response) {
-        _http_constants__WEBPACK_IMPORTED_MODULE_0__.HTTP["delete"]("/api/books/delete/".concat(id)).then(function (response) {
-          var i = _this2.books.map(function (item) {
-            return item.id;
-          }).indexOf(id); // find index of your object
-
-
-          _this2.books.splice(i, 1);
-        })["catch"](function (error) {
-          console.error(error);
-        });
-      });
-    }
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    if (!window.Laravel.isLoggedin) {
-      window.location.href = "/";
-    }
-
-    next();
+  props: {
+    books: Array
   }
-});
-
-/***/ }),
-
-/***/ "./resources/js/http-constants.js":
-/*!****************************************!*\
-  !*** ./resources/js/http-constants.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "HTTP": () => (/* binding */ HTTP)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
-var baseURL;
-var HTTP = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
-  baseURL: baseURL
 });
 
 /***/ }),
@@ -245,20 +172,6 @@ var render = function () {
                 { staticClass: "btn-group", attrs: { role: "group" } },
                 [
                   _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: {
-                        to: {
-                          name: "editbook",
-                          params: { id: book.id },
-                        },
-                      },
-                    },
-                    [_vm._v("Edit\n                        ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
                     "button",
                     {
                       staticClass: "btn btn-danger",
@@ -274,8 +187,7 @@ var render = function () {
                       ),
                     ]
                   ),
-                ],
-                1
+                ]
               ),
             ]),
           ])
@@ -283,20 +195,6 @@ var render = function () {
         0
       ),
     ]),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-info",
-        attrs: { type: "button" },
-        on: {
-          click: function ($event) {
-            return _vm.$router.push("/books/add")
-          },
-        },
-      },
-      [_vm._v("\n        Add Book\n    ")]
-    ),
   ])
 }
 var staticRenderFns = [
