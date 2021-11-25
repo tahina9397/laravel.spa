@@ -1,3 +1,6 @@
 https://medium.com/swlh/laravel-8-single-page-application-spa-with-vue-js-989a5d9d7c2
 https://jigeshraval.com/en/blog/laravel/laravel-separate-views-for-admin-or-backend-and-frontend
 https://shouts.dev/laravel-spa-with-vue3-auth-crud-example
+
+INERTIA
+https://www.positronx.io/laravel-vue-inertia-pagination-integration-tutorial/

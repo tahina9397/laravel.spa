@@ -19,6 +19,6 @@ use Inertia\Inertia;
 // Route::get('/', [IndexController::class, 'index'])->name('index.index');
 
 Route::get('/{any}', function () {
-    return Inertia::render('Test');
-    // return view('app');
+    // return Inertia::render('About');
+    return view('app');
 })->where('any', '.*');

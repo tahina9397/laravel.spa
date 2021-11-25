@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class BookController extends Controller
 {
@@ -13,9 +14,13 @@ class BookController extends Controller
     public function index()
     {
         $id_user = Auth::user()->id;
-        // $books = Book::all()->toArray();
         $books = Book::where("user_id", $id_user)->get()->toArray();
         return array_reverse($books);
+
+        // $books = Book::all()->toArray();
+        // return Inertia::render('Books', [
+        //     'books' => $books
+        // ]);
     }
 
     // add book
