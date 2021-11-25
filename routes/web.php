@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
+use Inertia\Inertia;
 
 
 /*
@@ -18,7 +19,6 @@ use App\Http\Controllers\IndexController;
 // Route::get('/', [IndexController::class, 'index'])->name('index.index');
 
 Route::get('/{any}', function () {
-    return view('app');
+    return Inertia::render('Test');
+    // return view('app');
 })->where('any', '.*');
-
-
